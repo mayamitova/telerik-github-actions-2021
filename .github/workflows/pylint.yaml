@@ -4,7 +4,7 @@ on:
     paths:
       - 'lint_test.py'
 jobs: 
-  build-and-deploy:
+  lint-test: 
     runs-on: ubuntu-latest
     steps:
       - run: echo "This has been triggered ${{ github.event_name }} event"
@@ -22,9 +22,44 @@ jobs:
       - name: Lint with pylint
         run: |
           python lint_test.py
-      - name: Build container
+      - run: echo "Job `lint-test` status ${{job.status}}
+  lint-test-1: 
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This has been triggered ${{ github.event_name }} event"
+      - run: echo "This runs on ${{ runner.os }} event"
+      - name: Checkout Repository Code
+        uses: actions/checkout@v2
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint
+      - name: Lint with pylint
+        run: |
+          python lint_test.py
+      - run: echo "Job `lint-test-1` status ${{job.status}}
+  build-and-deploy:
+    needs: [lint-test, lint-test-1]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This has been triggered ${{ github.event_name }} event"
+      - run: echo "This runs on ${{ runner.os }} event"
+      - name: Checkout Repository Code
+        uses: actions/checkout@v2
+      - name: Build Container Image
         run: |
           echo "Building container image...."
-          sleep 30
+          sleep 15
+          echo "Container built successfully."
+      - name: Deploy
+        run: |
+          echo "Deploying...."
+          sleep 15
+          echo "Deploy finished successfully."
+      - run: echo "Job `build-and-deploy` status ${{job.status}}
 
   
