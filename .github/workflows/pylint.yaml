@@ -45,6 +45,9 @@ jobs:
       - name: Style with pycodestyle
         run: |
           pycodestyle *.py
+      - name: Unit testing
+        run: |
+          python3 -m doctest factorial.py
       - run: echo "Job `lint-test-1` status ${{job.status}}"
   build-and-deploy:
     needs: [lint-test, lint-test-1]
