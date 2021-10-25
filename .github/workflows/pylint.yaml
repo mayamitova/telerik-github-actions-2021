@@ -22,7 +22,7 @@ jobs:
       - name: Lint with pylint
         run: |
           python lint_test.py
-      - run: echo "Job `lint-test` status ${{job.status}}
+      - run: echo "Job `lint-test` status ${{job.status}}"
   lint-test-1: 
     runs-on: ubuntu-latest
     steps:
@@ -41,7 +41,7 @@ jobs:
       - name: Lint with pylint
         run: |
           python lint_test.py
-      - run: echo "Job `lint-test-1` status ${{job.status}}
+      - run: echo "Job `lint-test-1` status ${{job.status}}"
   build-and-deploy:
     needs: [lint-test, lint-test-1]
     runs-on: ubuntu-latest
@@ -60,6 +60,6 @@ jobs:
           echo "Deploying...."
           sleep 15
           echo "Deploy finished successfully."
-      - run: echo "Job `build-and-deploy` status ${{job.status}}
+      - run: echo "Job `build-and-deploy` status ${{job.status}}"
 
   
