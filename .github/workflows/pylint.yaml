@@ -1,8 +1,8 @@
 name: "Deployment of python app"
-on: 
-  pull_request:
-    paths:
-      - '*.py'
+on: [push]
+#  pull_request:
+#    paths:
+#      - '*.py'
 jobs: 
   lint-test: 
     runs-on: ubuntu-latest
